@@ -85,10 +85,10 @@ function init() {
 	_extent = new esri.geometry.Extent({"xmin":-16975135,"ymin":-831634,"xmax":-4764778,"ymax":10282920,"spatialReference":{"wkid":102100}});
 	
 	_map = new esri.Map("map",{slider:false,wrapAround180:false,extent:_extent});
-	_map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_URL));
+	_map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(SATELLITE_URL));
 	
 	_map2 = new esri.Map("map2",{slider:false,wrapAround180:true,extent:_extent,logo:false});
-	_map2.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(SATELLITE_URL));	
+	_map2.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_URL));	
 
 
 	// jQuery event assignment
@@ -111,7 +111,7 @@ function init() {
 
 function handleWindowResize() {
 	var heightDoc = getViewportDimensions()[1];
-	$("#mainWindow").height(heightDoc - ($("#header").height()));
+	$("#mainWindow").height(heightDoc - ($("#header").height() + $("#bottom").height()));
 	dijit.byId("mainWindow").layout();
 	$("#map").height($("#mainWindow").height());
 	$("#map2").height($("#mainWindow").height()-$("#divTable").height());
@@ -214,7 +214,7 @@ function handleWindowResize() {
                             Website
                         </td>
                         <td class="columnData">
-                            <a>www.westfield.com/oldorchard</a>
+                            <a class="purple">www.westfield.com/oldorchard</a>
                         </td>
                         <td class="columnBlank"></td>
                     </tr>
@@ -232,6 +232,8 @@ function handleWindowResize() {
         </div><!--mapPane-->
             
       </div><!--/content-->    
+      
+      <div id="bottom"></div>
 
         
 </body>
