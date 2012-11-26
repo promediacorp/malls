@@ -114,6 +114,14 @@ a:hover{
 	overflow:hidden;
 }
 
+#map2 {
+	border:none;
+	padding:0;
+	height:100%;
+	width:100%;
+	overflow:hidden;
+}
+
 #hoverInfo{
 	font-size:10px;
 	font-family:Verdana, Geneva, sans-serif;

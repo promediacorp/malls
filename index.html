@@ -52,9 +52,8 @@ dojo.require("esri.map");
 
 var TITLE = "Fifty Largest Shopping Malls in the United States"
 var BYLINE = "Nam convallis mauris sem. Vestibulum facilisis, sapien et tristique laoreet, justo ligula accumsan massa, in iaculis justo dui eu sem. Maecenas ac lectus nisl."
-var WEBMAP_ID = "87bb88214d2944bbbf1d9d9255c812ca";
-var GEOMETRY_SERVICE_URL = "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer";
 var BASEMAP_URL = "http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer";
+var SATELLITE_URL = "http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
 
 /******************************************************
 ***************** end config section ******************
@@ -66,6 +65,7 @@ var _jqueryReady = false;
 
 var _map;
 var _initExtent;
+var _map2;
 
 var _isMobile = isMobile();
 
@@ -88,6 +88,12 @@ function init() {
 	//resize the map when the browser resizes
 	dojo.connect(dijit.byId('map'), 'resize', _map,_map.resize);	
 	
+	_map2 = new esri.Map("map2",{slider:false,wrapAround180:false,extent:_extent});
+	_map2.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(SATELLITE_URL));	
+	//resize the map when the browser resizes
+	dojo.connect(dijit.byId('map2'), 'resize', _map,_map.resize);	
+
+
 	// jQuery event assignment
 	
 	$(this).resize(handleWindowResize);
@@ -138,6 +144,7 @@ function handleWindowResize() {
       	<!--Sidebar Section-->
         <div dojotype="dijit.layout.ContentPane" id="leftPane" region="left">
           <div id="descriptionPanel">
+          	<div id="map2"></div>
           </div><!--/descriptionPanel-->
         </div><!--/leftPane-->
         
