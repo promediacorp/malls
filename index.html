@@ -83,15 +83,12 @@ function init() {
 	$("#subtitle").append(BYLINE);	
 
 	_extent = new esri.geometry.Extent({"xmin":-16975135,"ymin":-831634,"xmax":-4764778,"ymax":10282920,"spatialReference":{"wkid":102100}});
+	
 	_map = new esri.Map("map",{slider:false,wrapAround180:false,extent:_extent});
 	_map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_URL));
-	//resize the map when the browser resizes
-	dojo.connect(dijit.byId('map'), 'resize', _map,_map.resize);	
 	
 	_map2 = new esri.Map("map2",{slider:false,wrapAround180:false,extent:_extent});
 	_map2.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(SATELLITE_URL));	
-	//resize the map when the browser resizes
-	dojo.connect(dijit.byId('map2'), 'resize', _map,_map.resize);	
 
 
 	// jQuery event assignment
@@ -117,6 +114,8 @@ function handleWindowResize() {
 	$("#mainWindow").height(heightDoc - ($("#header").height()));
 	dijit.byId("mainWindow").layout();
 	$("#map").height($("#mainWindow").height());
+	_map.resize();
+	_map2.resize();
 }
 
 </script>
