@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us">
 <head>
 
-<title>Blank Template</title>
+<title>50 Largest US Shopping Malls</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=7, IE=9">
@@ -50,21 +50,22 @@ dojo.require("esri.map");
 ***************** begin config section ****************
 *******************************************************/
 
-var TITLE = "This is the title."
-var BYLINE = "This is the byline"
+var TITLE = "Fifty Largest Shopping Malls in the United States"
+var BYLINE = "Nam convallis mauris sem. Vestibulum facilisis, sapien et tristique laoreet, justo ligula accumsan massa, in iaculis justo dui eu sem. Maecenas ac lectus nisl."
 var WEBMAP_ID = "87bb88214d2944bbbf1d9d9255c812ca";
 var GEOMETRY_SERVICE_URL = "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer";
+var BASEMAP_URL = "http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer";
 
 /******************************************************
 ***************** end config section ******************
 *******************************************************/
 
-var _map;
 
 var _dojoReady = false;
 var _jqueryReady = false;
 
-var _initExtent; // new esri.geometry.Extent({"xmin":-9346414,"ymin":3131127,"xmax":-9033328,"ymax":3339953,"spatialReference":{"wkid":102100}});
+var _map;
+var _initExtent;
 
 var _isMobile = isMobile();
 
@@ -77,6 +78,15 @@ function init() {
 	
 	if (!_jqueryReady) return;
 	if (!_dojoReady) return;
+	
+	$("#title").append(TITLE);
+	$("#subtitle").append(BYLINE);	
+
+	_extent = new esri.geometry.Extent({"xmin":-16975135,"ymin":-831634,"xmax":-4764778,"ymax":10282920,"spatialReference":{"wkid":102100}});
+	_map = new esri.Map("map",{slider:false,wrapAround180:false,extent:_extent});
+	_map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_URL));
+	//resize the map when the browser resizes
+	dojo.connect(dijit.byId('map'), 'resize', _map,_map.resize);	
 	
 	// jQuery event assignment
 	
@@ -92,43 +102,8 @@ function init() {
         _map.setExtent(_initExtent);
     });
 	
-	$("#title").append(TITLE);
-	$("#subtitle").append(BYLINE);	
-
-	var mapDeferred = esri.arcgis.utils.createMap(WEBMAP_ID, "map", {
-		mapOptions: {
-			slider: false,
-			wrapAround180: true,
-			extent:_initExtent
-		},
-		ignorePopups: false,
-		geometryServiceURL: GEOMETRY_SERVICE_URL
-	});
+	handleWindowResize();
 	
-	mapDeferred.addCallback(function(response) {	  
-
-		_map = response.map;
-		$("#description").append(response.itemInfo.item.description);
-		$("#mapTitle").append(response.itemInfo.item.title);
-				
-		//resize the map when the browser resizes
-		dojo.connect(dijit.byId('map'), 'resize', _map, _map.resize);
-		
-		if(_map.loaded){
-			initMap();
-		} else {
-			dojo.connect(_map,"onLoad",function(){
-				initMap();
-			});
-		}
-		
-		handleWindowResize();
-		
-	});
-	
-}
-
-function initMap() {
 }
 
 function handleWindowResize() {
@@ -136,7 +111,6 @@ function handleWindowResize() {
 	$("#mainWindow").height(heightDoc - ($("#header").height()));
 	dijit.byId("mainWindow").layout();
 	$("#map").height($("#mainWindow").height());
-
 }
 
 </script>
@@ -164,8 +138,6 @@ function handleWindowResize() {
       	<!--Sidebar Section-->
         <div dojotype="dijit.layout.ContentPane" id="leftPane" region="left">
           <div id="descriptionPanel">
-	          <h3 id="mapTitle" class='mapTitle'></h3>
-        	  <div id="description" class="description"></div>
           </div><!--/descriptionPanel-->
         </div><!--/leftPane-->
         
