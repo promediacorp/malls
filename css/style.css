@@ -165,6 +165,11 @@ a:hover{
 	overflow:hidden;
 }
 
+#divTable {
+	height:340px;
+	overflow-y:auto;
+}
+
 table {
 	font-family:Verdana, Geneva, sans-serif;
 	padding-left:10px;
