@@ -82,12 +82,15 @@ function init() {
 	$("#title").append(TITLE);
 	$("#subtitle").append(BYLINE);	
 
-	_extent = new esri.geometry.Extent({"xmin":-16975135,"ymin":-831634,"xmax":-4764778,"ymax":10282920,"spatialReference":{"wkid":102100}});
-	
+	_extent = new esri.geometry.Extent({"xmin":-18775379.213364024,"ymin":2905829.385274,"xmax":-3121075.82056398,"ymax":6467183.407136008,"spatialReference":{"wkid":102100}});
 	_map = new esri.Map("map",{slider:false,wrapAround180:false,extent:_extent});
 	_map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(SATELLITE_URL));
-	
-	_map2 = new esri.Map("map2",{slider:false,wrapAround180:true,extent:_extent,logo:false});
+	_map2 = new esri.Map("map2",
+							{
+								slider:false,
+								wrapAround180:true,
+								logo:false
+							});
 	_map2.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_URL));	
 
 
@@ -102,11 +105,10 @@ function init() {
         _map.setLevel(_map.getLevel()-1);
     });
 	$("#zoomExtent").click(function(e) {
-        _map.setExtent(_initExtent);
+        _map.setExtent(_extent);
     });
 	
 	handleWindowResize();
-	
 }
 
 function handleWindowResize() {
@@ -117,6 +119,7 @@ function handleWindowResize() {
 	$("#map2").height($("#mainWindow").height()-$("#divTable").height());
 	_map.resize();
 	_map2.resize();
+	setTimeout(function(){_map2.setExtent(_extent)},500);	
 }
 
 </script>
@@ -145,7 +148,7 @@ function handleWindowResize() {
         <div dojotype="dijit.layout.ContentPane" id="leftPane" region="left">
           	<div id="map2"></div>
             <div id="divTable">
-                <table>
+                <table id="tableDetails">
                     <tr>
                         <td class="columnTitle">
                             Mall
@@ -233,7 +236,13 @@ function handleWindowResize() {
             
       </div><!--/content-->    
       
-      <div id="bottom"></div>
+      <div id="bottom">
+      	<table style="width:100%;height:100%">
+        	<tr>
+            	<td style="text-align:center;vertical-align:middle">Graph will go here.</td>
+            </tr>
+        </table>
+      </div>
 
         
 </body>

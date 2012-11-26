@@ -170,7 +170,7 @@ a:hover{
 	overflow-y:auto;
 }
 
-table {
+#tableDetails {
 	font-family:Verdana, Geneva, sans-serif;
 	padding-left:10px;
 	width:100%;
