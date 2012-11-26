@@ -87,7 +87,7 @@ function init() {
 	_map = new esri.Map("map",{slider:false,wrapAround180:false,extent:_extent});
 	_map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_URL));
 	
-	_map2 = new esri.Map("map2",{slider:false,wrapAround180:false,extent:_extent});
+	_map2 = new esri.Map("map2",{slider:false,wrapAround180:true,extent:_extent});
 	_map2.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(SATELLITE_URL));	
 
 
@@ -143,11 +143,79 @@ function handleWindowResize() {
       	<!--Sidebar Section-->
         <div dojotype="dijit.layout.ContentPane" id="leftPane" region="left">
           	<div id="map2"></div>
-            <div id="factoids">
-            	<p>test</p>
-                <br />
-                <p>test</p>
-            </div>
+            <table>
+                <tr>
+                    <td class="columnTitle">
+                        Mall
+                    </td>
+                    <td class="columnData purple">
+                        Westfield Old Orchard
+                    </td>
+                </tr>
+                <tr>
+                    <td class="columnTitle">
+                        Factoid
+                    </td>
+                    <td class="columnData">
+                        Westfield is one of the oldest malls in the top fifty, dating to 1956.  This is dummy type, and will include a cool factoid or two about each mall.  Don't you love dummy type?
+                    </td>
+                    <td class="columnBlank"></td>
+                </tr>
+                <tr>
+                    <td class="columnTitle">
+                        Rank
+                    </td>
+                    <td class="columnData purple" style="font-size:60px">
+                        42
+                    </td>
+                    <td class="columnBlank"></td>
+                </tr>
+                <tr>
+                    <td class="columnTitle">
+                        Where
+                    </td>
+                    <td class="columnData">
+                        Skokie, Illinois
+                    </td>
+                    <td class="columnBlank"></td>
+                </tr>
+                <tr>
+                    <td class="columnTitle">
+                        Size
+                    </td>
+                    <td class="columnData">
+                        1.8 million sq. ft. leasable area
+                    </td>
+                    <td class="columnBlank"></td>
+                </tr>
+                <tr>
+                    <td class="columnTitle">
+                        Opened
+                    </td>
+                    <td class="columnData">
+                        1956
+                    </td>
+                    <td class="columnBlank"></td>
+                </tr>
+                <tr>
+                    <td class="columnTitle">
+                        Levels
+                    </td>
+                    <td class="columnData">
+                        1
+                    </td>
+                    <td class="columnBlank"></td>
+                </tr>
+                <tr>
+                    <td class="columnTitle">
+                        Website
+                    </td>
+                    <td class="columnData">
+                        <a>www.westfield.com/oldorchard</a>
+                    </td>
+                    <td class="columnBlank"></td>
+                </tr>
+            </table>
         </div><!--/leftPane-->
         
         <!--Map Section-->

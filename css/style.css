@@ -114,14 +114,6 @@ a:hover{
 	overflow:hidden;
 }
 
-#map2 {
-	border:none;
-	padding:0;
-	height:40%;
-	width:100%;
-	overflow:hidden;
-}
-
 #hoverInfo{
 	font-size:10px;
 	font-family:Verdana, Geneva, sans-serif;
@@ -162,4 +154,49 @@ a:hover{
 	min-width:400px;
 	height:100%;
 	font-size:0.9em;
+	overflow:hidden;
+}
+
+#map2 {
+	border:none;
+	padding:0;
+	height:200px;
+	width:100%;
+	overflow:hidden;
+}
+
+table {
+	font-family:Verdana, Geneva, sans-serif;
+	padding-left:10px;
+	width:100%;
+}
+
+.columnTitle {
+	width:70px;
+	padding-top:5px;
+	padding-bottom:5px;
+	padding-right:20px;
+	text-align:right;
+	color:#898989;
+}
+
+.columnData {
+	padding-top:5px;
+	padding-bottom:5px;
+	color:#000;
+	border:solid;
+	border-color:#898989;
+	border-width:thin;
+	border-right:none;
+	border-left:none;
+	border-top:none;
+	font-weight:bold;
+}
+
+.columnBlank {
+	width:25px;
+}
+
+.purple {
+	color:#9e52ce;
 }
