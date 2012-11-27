@@ -16,6 +16,8 @@
 <script type="text/javascript">var djConfig = {parseOnLoad: true};</script>
 <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=3.2"></script>
 <script type="text/javascript" src="http://storymaps.esri.com/common/helper_functions.js"></script>
+<script type="text/javascript" src="lib/LocationsService.js"></script>
+
 
 <!--Social Media Links-->
 <script type="text/javascript">var switchTo5x=true;</script>
@@ -54,6 +56,7 @@ var TITLE = "Fifty Largest Shopping Malls in the United States"
 var BYLINE = "Nam convallis mauris sem. Vestibulum facilisis, sapien et tristique laoreet, justo ligula accumsan massa, in iaculis justo dui eu sem. Maecenas ac lectus nisl."
 var BASEMAP_URL = "http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer";
 var SATELLITE_URL = "http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
+var CSV_FILE = "data/Top50Malls_2012.csv";
 
 /******************************************************
 ***************** end config section ******************
@@ -66,6 +69,8 @@ var _jqueryReady = false;
 var _map;
 var _initExtent;
 var _map2;
+
+var _locations;
 
 var _isMobile = isMobile();
 
@@ -83,8 +88,29 @@ function init() {
 	$("#subtitle").append(BYLINE);	
 
 	_extent = new esri.geometry.Extent({"xmin":-18775379.213364024,"ymin":2905829.385274,"xmax":-3121075.82056398,"ymax":6467183.407136008,"spatialReference":{"wkid":102100}});
-	_map = new esri.Map("map",{slider:false,wrapAround180:false,extent:_extent});
+	_map = new esri.Map("map",{slider:false,wrapAround180:true,extent:_extent});
 	_map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(SATELLITE_URL));
+	dojo.connect(_map, 'onLoad', function(theMap) { 
+
+		var locationsService = new LocationsService();		  
+		$(locationsService).bind("complete", function(){
+			
+			_locations = locationsService.getLocations();
+			
+			$(_locations).each(function(index, element) {
+               _map.graphics.add(element); 
+            });	
+			
+			dojo.connect(_map.graphics, "onMouseOver", layer_onMouseOver);
+			dojo.connect(_map.graphics, "onMouseOut", layer_onMouseOut);
+			dojo.connect(_map.graphics, "onClick", layer_onClick);
+			
+		});
+		
+		locationsService.process(CSV_FILE);	
+		
+	});
+
 	_map2 = new esri.Map("map2",
 							{
 								slider:false,
@@ -92,7 +118,7 @@ function init() {
 								logo:false
 							});
 	_map2.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_URL));	
-
+	
 
 	// jQuery event assignment
 	
@@ -109,6 +135,9 @@ function init() {
     });
 	
 	handleWindowResize();
+	
+	setTimeout(function(){_map.setExtent(_extent)},500);	
+	
 }
 
 function handleWindowResize() {
