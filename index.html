@@ -106,7 +106,7 @@ function init() {
 			dojo.connect(_map.graphics, "onMouseOut", layer_onMouseOut);
 			dojo.connect(_map.graphics, "onClick", layer_onClick);
 			
-			_selected = _locations[_locations.length - 1];
+			_selected = _locations[0];
 			postSelection();
 			
 		});
@@ -193,8 +193,13 @@ function postSelection() {
 	$("#cellDescription").append(_selected.attributes.description);
 	$("#divRank").empty();
 	$("#divRank").append(_selected.attributes.rank);
+	
+	
 	setTimeout(function(){
+		_map2.graphics.clear();
+		_map2.graphics.add(new esri.Graphic(_selected.geometry,new esri.symbol.PictureMarkerSymbol("images/purple.png",22,22)));
 		_map.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL);
+		_map2.centerAndZoom(_selected.geometry,2);
 		if (!_map.graphics.visible)	setTimeout(function(){_map.graphics.show()},1000);
 	},500);
 }
@@ -202,10 +207,10 @@ function postSelection() {
 function onArrowClick(event) {
 	var index = $.inArray(_selected,_locations);
 	if (event.target.id == "arrowRight") {
-		if (index == 49) index = 0;
+		if (index == _locations.length) index = 0;
 		else index++
 	} else {
-		if (index == 0) index = 49;
+		if (index == 0) index = _locations.length;
 		else index--;
 	}
 	_selected = _locations[index];
