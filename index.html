@@ -75,73 +75,72 @@ var _locations;
 
 var _isMobile = isMobile();
 
+var _selected;
+
 dojo.addOnLoad(function() {_dojoReady = true;init()});
 jQuery(document).ready(function() {_jqueryReady = true;init()});
 
-
 function init() {
-	
 	
 	if (!_jqueryReady) return;
 	if (!_dojoReady) return;
 	
 	$("#title").append(TITLE);
 	$("#subtitle").append(BYLINE);	
-	
+
+	$(this).resize(handleWindowResize);
+		
 	_extent = new esri.geometry.Extent({"xmin":-18775379.213364024,"ymin":2905829.385274,"xmax":-3121075.82056398,"ymax":6467183.407136008,"spatialReference":{"wkid":102100}});
+	
 	_map = new esri.Map("map",{slider:false,wrapAround180:true,extent:_extent});
 	_map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(SATELLITE_URL));
-	dojo.connect(_map, 'onLoad', function(theMap) { 
+	dojo.connect(_map, 'onLoad', init2);
 
-		var locationsService = new LocationsService();		  
-		$(locationsService).bind("complete", function(){
-			
-			_locations = locationsService.getLocations();
-			_map.graphics.hide();
-			$(_locations).each(function(index, element) {
-               _map.graphics.add(element); 
-            });	
-			
-			dojo.connect(_map.graphics, "onMouseOver", layer_onMouseOver);
-			dojo.connect(_map.graphics, "onMouseOut", layer_onMouseOut);
-			dojo.connect(_map.graphics, "onClick", layer_onClick);
-			
-			_selected = _locations[0];
-			postSelection();
-			
-		});
+	_map2 = new esri.Map("map2",{slider:false,wrapAround180:true,logo:false});
+	_map2.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_URL));	
+	dojo.connect(_map2, 'onLoad', init2);
 		
-		locationsService.process(CSV_FILE);	
+}
+
+function init2(map) {
+
+	if (!_map.loaded) return;
+	if (!_map2.loaded) return;
+
+	var locationsService = new LocationsService();		  
+	$(locationsService).bind("complete", function(){
+		
+		_locations = locationsService.getLocations();
+		_map.graphics.hide();
+		$(_locations).each(function(index, element) {
+		   _map.graphics.add(element); 
+		});	
+		
+		dojo.connect(_map.graphics, "onMouseOver", layer_onMouseOver);
+		dojo.connect(_map.graphics, "onMouseOut", layer_onMouseOut);
+		dojo.connect(_map.graphics, "onClick", layer_onClick);
+		
+		_selected = _locations[0];
+		postSelection(500);
 		
 	});
+	
+	locationsService.process(CSV_FILE);	
 
-	_map2 = new esri.Map("map2",
-							{
-								slider:false,
-								wrapAround180:true,
-								logo:false
-							});
-	_map2.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_URL));	
-	
-
-	// jQuery event assignment
-	
-	$(this).resize(handleWindowResize);
-	
 	$("#zoomIn").click(function(e) {
-        _map.setLevel(_map.getLevel()+1);
-    });
+		_map.setLevel(_map.getLevel()+1);
+	});
 	$("#zoomOut").click(function(e) {
-        _map.setLevel(_map.getLevel()-1);
-    });
+		_map.setLevel(_map.getLevel()-1);
+	});
 	$("#zoomExtent").click(function(e) {
-        _map.setExtent(_extent);
-    });
+		_map.setExtent(_extent);
+	});
 
 	$(".arrow").click(onArrowClick)
-	
+
 	handleWindowResize();
-	
+
 }
 
 function handleWindowResize() {
@@ -150,17 +149,21 @@ function handleWindowResize() {
 	dijit.byId("mainWindow").layout();
 	$("#map").height($("#mainWindow").height());
 	$("#map2").height($("#mainWindow").height()-$("#divTable").height());
-	_map.resize();
-	_map2.resize();
-	setTimeout(function(){_map2.setExtent(_extent)},500);	
-	if (_selected) setTimeout(function(){_map.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL)},500);	
+	if (_map) _map.resize();
+	if (_map2) _map2.resize();
+	if (_selected) {
+		setTimeout(function(){	
+		_map.centerAt(_selected.geometry);
+		_map2.centerAt(_selected.geometry);
+		},500);
+	}
 }
 
 function layer_onClick(event)
 {
 	_selected = event.graphic;
 	//var index = $.inArray(_selected,_locations);
-	postSelection();
+	postSelection(0);
 }
 
 function layer_onMouseOver(event)
@@ -186,7 +189,7 @@ function layer_onMouseOut(event)
 	*/
 }
 
-function postSelection() {
+function postSelection(delay) {
 	$("#cellName").empty();
 	$("#cellName").append(_selected.attributes.name);
 	$("#cellDescription").empty();
@@ -194,14 +197,13 @@ function postSelection() {
 	$("#divRank").empty();
 	$("#divRank").append(_selected.attributes.rank);
 	
-	
 	setTimeout(function(){
 		_map2.graphics.clear();
 		_map2.graphics.add(new esri.Graphic(_selected.geometry,new esri.symbol.PictureMarkerSymbol("images/purple.png",22,22)));
 		_map.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL);
 		_map2.centerAndZoom(_selected.geometry,2);
 		if (!_map.graphics.visible)	setTimeout(function(){_map.graphics.show()},1000);
-	},500);
+	},delay);
 }
 
 function onArrowClick(event) {
@@ -214,7 +216,7 @@ function onArrowClick(event) {
 		else index--;
 	}
 	_selected = _locations[index];
-	postSelection();
+	postSelection(0);
 }
 
 </script>
