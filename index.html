@@ -106,7 +106,7 @@ function init() {
 			dojo.connect(_map.graphics, "onClick", layer_onClick);
 			
 			_selected = _locations[_locations.length - 1];
-			setTimeout(postSelection,500);
+			postSelection();
 			
 		});
 		
@@ -190,7 +190,7 @@ function postSelection() {
 	$("#cellDescription").append(_selected.attributes.description);
 	$("#cellRank").empty();
 	$("#cellRank").append(_selected.attributes.rank);
-	_map.centerAndZoom(_selected.geometry,10);
+	setTimeout(function(){_map.centerAndZoom(_selected.geometry,10)},500);
 }
 
 </script>
