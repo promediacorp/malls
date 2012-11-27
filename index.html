@@ -72,6 +72,8 @@ var _map2;
 
 var _locations;
 
+var _layerLocations;
+
 var _isMobile = isMobile();
 
 dojo.addOnLoad(function() {_dojoReady = true;init()});
@@ -86,34 +88,50 @@ function init() {
 	
 	$("#title").append(TITLE);
 	$("#subtitle").append(BYLINE);	
-
+	
 	_extent = new esri.geometry.Extent({"xmin":-18775379.213364024,"ymin":2905829.385274,"xmax":-3121075.82056398,"ymax":6467183.407136008,"spatialReference":{"wkid":102100}});
-	_map = new esri.Map("map",{slider:false,wrapAround180:true,extent:_extent});
-	_map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(SATELLITE_URL));
-	dojo.connect(_map, 'onLoad', function(theMap) { 
 
-		var locationsService = new LocationsService();		  
-		$(locationsService).bind("complete", function(){
+	var locationsService = new LocationsService();		  
+	$(locationsService).bind("complete", function(){
+		
+		_locations = locationsService.getLocations();
+		_layerLocations = new esri.layers.GraphicsLayer();
+		_layerLocations.hide();
+		$(_locations).each(function(index, element) {
+		   _layerLocations.add(element); 
+		});	
+		
+		_map = new esri.Map("map",{slider:false,wrapAround180:true,extent:_extent});
+		_map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(SATELLITE_URL));
+		_map.addLayer(_layerLocations);
+		
+		dojo.connect(_layerLocations, "onMouseOver", layer_onMouseOver);
+		dojo.connect(_layerLocations, "onMouseOut", layer_onMouseOut);
+		dojo.connect(_layerLocations, "onClick", layer_onClick);
+		
+		_selected = _locations[_locations.length - 1];
+		postSelection();
 			
-			_locations = locationsService.getLocations();
-			
-			$(_locations).each(function(index, element) {
-               _map.graphics.add(element); 
-            });	
-			
-			dojo.connect(_map.graphics, "onMouseOver", layer_onMouseOver);
-			dojo.connect(_map.graphics, "onMouseOut", layer_onMouseOut);
-			dojo.connect(_map.graphics, "onClick", layer_onClick);
-			
-			_selected = _locations[_locations.length - 1];
-			postSelection();
-			
+		// jQuery event assignment
+		
+		$(this).resize(handleWindowResize);
+		
+		$("#zoomIn").click(function(e) {
+			_map.setLevel(_map.getLevel()+1);
+		});
+		$("#zoomOut").click(function(e) {
+			_map.setLevel(_map.getLevel()-1);
+		});
+		$("#zoomExtent").click(function(e) {
+			_map.setExtent(_extent);
 		});
 		
-		locationsService.process(CSV_FILE);	
-		
-	});
+		handleWindowResize();
 
+	});
+	
+	locationsService.process(CSV_FILE);	
+		
 	_map2 = new esri.Map("map2",
 							{
 								slider:false,
@@ -121,23 +139,6 @@ function init() {
 								logo:false
 							});
 	_map2.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_URL));	
-	
-
-	// jQuery event assignment
-	
-	$(this).resize(handleWindowResize);
-	
-	$("#zoomIn").click(function(e) {
-        _map.setLevel(_map.getLevel()+1);
-    });
-	$("#zoomOut").click(function(e) {
-        _map.setLevel(_map.getLevel()-1);
-    });
-	$("#zoomExtent").click(function(e) {
-        _map.setExtent(_extent);
-    });
-	
-	handleWindowResize();
 	
 }
 
@@ -190,7 +191,10 @@ function postSelection() {
 	$("#cellDescription").append(_selected.attributes.description);
 	$("#cellRank").empty();
 	$("#cellRank").append(_selected.attributes.rank);
-	setTimeout(function(){_map.centerAndZoom(_selected.geometry,10)},500);
+	setTimeout(function(){
+		_map.centerAndZoom(_selected.geometry,10);
+		if (!_layerLocations.visible) setTimeout(function(){_layerLocations.show()},1000);
+		},500);
 }
 
 </script>
