@@ -57,6 +57,7 @@ var BYLINE = "Nam convallis mauris sem. Vestibulum facilisis, sapien et tristiqu
 var BASEMAP_URL = "http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer";
 var SATELLITE_URL = "http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
 var CSV_FILE = "data/Top50Malls_2012.csv";
+var MALL_ZOOM_LEVEL = 15;
 
 /******************************************************
 ***************** end config section ******************
@@ -150,7 +151,7 @@ function handleWindowResize() {
 	_map.resize();
 	_map2.resize();
 	setTimeout(function(){_map2.setExtent(_extent)},500);	
-	if (_selected) setTimeout(function(){_map.centerAndZoom(_selected.geometry,10)},500);	
+	if (_selected) setTimeout(function(){_map.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL)},500);	
 }
 
 function layer_onClick(event)
@@ -190,7 +191,7 @@ function postSelection() {
 	$("#cellDescription").append(_selected.attributes.description);
 	$("#cellRank").empty();
 	$("#cellRank").append(_selected.attributes.rank);
-	setTimeout(function(){_map.centerAndZoom(_selected.geometry,10)},500);
+	setTimeout(function(){_map.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL)},500);
 }
 
 </script>
