@@ -212,3 +212,14 @@ a:hover{
 	min-height:120px;
 	max-height:300px;
 }
+
+.arrow {
+	cursor:pointer;
+	float:left;
+}
+
+#divRank {
+	float:left;
+	text-align:center;
+	width:100px;
+}

@@ -87,7 +87,7 @@ function init() {
 	
 	$("#title").append(TITLE);
 	$("#subtitle").append(BYLINE);	
-
+	
 	_extent = new esri.geometry.Extent({"xmin":-18775379.213364024,"ymin":2905829.385274,"xmax":-3121075.82056398,"ymax":6467183.407136008,"spatialReference":{"wkid":102100}});
 	_map = new esri.Map("map",{slider:false,wrapAround180:true,extent:_extent});
 	_map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(SATELLITE_URL));
@@ -137,6 +137,8 @@ function init() {
 	$("#zoomExtent").click(function(e) {
         _map.setExtent(_extent);
     });
+
+	$(".arrow").click(onArrowClick)
 	
 	handleWindowResize();
 	
@@ -189,12 +191,25 @@ function postSelection() {
 	$("#cellName").append(_selected.attributes.name);
 	$("#cellDescription").empty();
 	$("#cellDescription").append(_selected.attributes.description);
-	$("#cellRank").empty();
-	$("#cellRank").append(_selected.attributes.rank);
+	$("#divRank").empty();
+	$("#divRank").append(_selected.attributes.rank);
 	setTimeout(function(){
 		_map.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL);
 		if (!_map.graphics.visible)	setTimeout(function(){_map.graphics.show()},1000);
 	},500);
+}
+
+function onArrowClick(event) {
+	var index = $.inArray(_selected,_locations);
+	if (event.target.id == "arrowRight") {
+		if (index == 49) index = 0;
+		else index++
+	} else {
+		if (index == 0) index = 49;
+		else index--;
+	}
+	_selected = _locations[index];
+	postSelection();
 }
 
 </script>
@@ -225,18 +240,22 @@ function postSelection() {
             <div id="divTable">
                 <table id="tableDetails">
                     <tr>
-                        <td class="columnTitle" height="20px">Mall</td>
-                        <td id="cellName" class="columnData purple"></td>
+                        <td class="columnTitle">Mall</td>
+                        <td id="cellName" class="columnData purple" height="20px"></td>
                         <td class="columnBlank"></td>
                     </tr>
                     <tr>
-                        <td class="columnTitle" height="85px">Factoid</td>
-                        <td id="cellDescription" class="columnData"></td>
+                        <td class="columnTitle">Factoid</td>
+                        <td id="cellDescription" class="columnData" height="85px"></td>
                         <td class="columnBlank"></td>
                     </tr>
                     <tr>
                         <td class="columnTitle">Rank</td>
-                        <td id="cellRank" class="columnData purple" style="font-size:60px"></td>
+                        <td id="cellRank" class="columnData purple" height="40px" style="font-size:60px">
+ 	                        <img id='arrowLeft' class='arrow' src='images/picture_left.png'</img>
+                            <div id="divRank"></div>
+                            <img id='arrowRight' class='arrow' src='images/picture_right.png'</img>
+                        </td>
                         <td class="columnBlank"></td>
                     </tr>
                     <tr>
