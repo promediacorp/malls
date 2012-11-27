@@ -97,7 +97,7 @@ function init() {
 		$(locationsService).bind("complete", function(){
 			
 			_locations = locationsService.getLocations();
-			
+			_map.graphics.hide();
 			$(_locations).each(function(index, element) {
                _map.graphics.add(element); 
             });	
@@ -191,7 +191,10 @@ function postSelection() {
 	$("#cellDescription").append(_selected.attributes.description);
 	$("#cellRank").empty();
 	$("#cellRank").append(_selected.attributes.rank);
-	setTimeout(function(){_map.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL)},500);
+	setTimeout(function(){
+		_map.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL);
+		if (!_map.graphics.visible)	setTimeout(function(){_map.graphics.show()},1000);
+	},500);
 }
 
 </script>
