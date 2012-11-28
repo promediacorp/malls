@@ -88,45 +88,46 @@ function init() {
 	$("#title").append(TITLE);
 	$("#subtitle").append(BYLINE);	
 
+	handleWindowResize();
 	$(this).resize(handleWindowResize);
 		
 	_extent = new esri.geometry.Extent({"xmin":-18775379.213364024,"ymin":2905829.385274,"xmax":-3121075.82056398,"ymax":6467183.407136008,"spatialReference":{"wkid":102100}});
+
+	var locationsService = new LocationsService();		  
+	$(locationsService).bind("complete", function(){
+		_locations = locationsService.getLocations();
+		init2();
+	});
+	locationsService.process(CSV_FILE);		
 	
-	_map = new esri.Map("map",{slider:false,wrapAround180:true,extent:_extent});
+	_map = new esri.Map("map",{slider:false,wrapAround180:true});
 	_map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(SATELLITE_URL));
 	dojo.connect(_map, 'onLoad', init2);
 
 	_map2 = new esri.Map("map2",{slider:false,wrapAround180:true,logo:false});
 	_map2.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_URL));	
 	dojo.connect(_map2, 'onLoad', init2);
-		
+	
 }
 
 function init2(map) {
 
 	if (!_map.loaded) return;
 	if (!_map2.loaded) return;
-
-	var locationsService = new LocationsService();		  
-	$(locationsService).bind("complete", function(){
-		
-		_locations = locationsService.getLocations();
-		_map.graphics.hide();
-		$(_locations).each(function(index, element) {
-		   _map.graphics.add(element); 
-		});	
-		
-		dojo.connect(_map.graphics, "onMouseOver", layer_onMouseOver);
-		dojo.connect(_map.graphics, "onMouseOut", layer_onMouseOut);
-		dojo.connect(_map.graphics, "onClick", layer_onClick);
-		
-		_selected = _locations[0];
-		postSelection(500);
-		
-	});
+	if (!_locations) return;
 	
-	locationsService.process(CSV_FILE);	
-
+	_map.graphics.hide();
+	$(_locations).each(function(index, element) {
+	   _map.graphics.add(element); 
+	});	
+	
+	dojo.connect(_map.graphics, "onMouseOver", layer_onMouseOver);
+	dojo.connect(_map.graphics, "onMouseOut", layer_onMouseOut);
+	dojo.connect(_map.graphics, "onClick", layer_onClick);
+	
+	_selected = _locations[0];
+	postSelection(500);
+	
 	$("#zoomIn").click(function(e) {
 		_map.setLevel(_map.getLevel()+1);
 	});
@@ -138,8 +139,6 @@ function init2(map) {
 	});
 
 	$(".arrow").click(onArrowClick)
-
-	handleWindowResize();
 
 }
 
