@@ -198,7 +198,7 @@ function postSelection() {
 
 function populateFacts() {
 	$("#cellName").empty();
-	$("#cellName").append(_selected.attributes.name);
+	$("#cellName").append("<a href='"+_selected.attributes.website+"' class='purple' target='_blank'>"+_selected.attributes.name+"</a>");
 	$("#cellDescription").empty();
 	$("#cellDescription").append(_selected.attributes.description);
 	$("#divRank").empty();
@@ -220,11 +220,7 @@ function populateFacts() {
 	$("#cellLevels").empty();
 	$("#cellLevels").append("<div style='width:100px;float:left'>"+_selected.attributes.levels+"</span>");
 	$("#cellLevels").append(spanFoodCourt_Title);
-	$("#cellLevels").append(spanFoodCourt_Value);
-	
-	$("#cellWebsite").empty();
-	$("#cellWebsite").append("<a href='"+_selected.attributes.website+"' class='purple' target='_blank'>"+_selected.attributes.website+"</a>");	
-	
+	$("#cellLevels").append(spanFoodCourt_Value);	
 }
 
 function situateMaps() {
@@ -281,7 +277,7 @@ function onArrowClick(event) {
                     </tr>
                     <tr>
                         <td class="columnTitle">Factoid</td>
-                        <td id="cellDescription" class="columnData" height="85px"></td>
+                        <td id="cellDescription" class="columnData" height="100px"></td>
                         <td class="columnBlank"></td>
                     </tr>
                     <tr>
@@ -311,11 +307,6 @@ function onArrowClick(event) {
                     <tr>
                         <td class="columnTitle">Levels</td>
                         <td id="cellLevels" class="columnData"></td>
-                        <td class="columnBlank"></td>
-                    </tr>
-                    <tr>
-                        <td class="columnTitle">Website</td>
-                        <td id="cellWebsite" class="columnData"></td>
                         <td class="columnBlank"></td>
                     </tr>
                 </table>

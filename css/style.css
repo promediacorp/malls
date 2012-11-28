@@ -168,6 +168,7 @@ a:hover{
 #divTable {
 	height:340px;
 	overflow-y:auto;
+	overflow-x:hidden;
 }
 
 #tableDetails {
