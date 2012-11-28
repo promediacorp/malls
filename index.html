@@ -261,7 +261,7 @@ function situateMaps() {
 	$.each(_locations,function(index,value){
 		value.symbol.setWidth(21).setHeight(24).setOffset(0,7);
 	});
-	_selected.symbol.setWidth(28).setHeight(32);
+	_selected.symbol.setWidth(28).setHeight(32).setOffset(0,9);
 	if (_mode == MAP_MODE_SINGLE) {
 		_map.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL);
 		_map2.centerAndZoom(_selected.geometry,FULL_ZOOM_LEVEL);
