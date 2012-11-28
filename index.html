@@ -207,12 +207,21 @@ function populateFacts() {
 	$("#cellWhere").append(_selected.attributes.city+", "+_selected.attributes.state);	
 	$("#cellSize").empty();
 	$("#cellSize").append(addCommas(_selected.attributes.leasable_area)+" leasable square feet");	
-	$("#cellOpened").empty();
+
 	var spanRenovated_Title = $("<span style='margin-left:50px;color:#898989;font-weight:normal'>Renovated</span>");
 	var spanRenovated_Value = $("<span style='margin-left:20px;color:#000000;font-weight:bold'>"+_selected.attributes.renovated+"</span>");
-	$("#cellOpened").append(_selected.attributes.opened);	
+	$("#cellOpened").empty();
+	$("#cellOpened").append("<div style='width:100px;float:left'>"+_selected.attributes.opened+"</span>");	
 	$("#cellOpened").append(spanRenovated_Title);
 	$("#cellOpened").append(spanRenovated_Value);
+	
+	var spanFoodCourt_Title = $("<span style='margin-left:50px;color:#898989;font-weight:normal'>Food Court</span>");
+	var spanFoodCourt_Value = $("<span style='margin-left:20px;color:#000000;font-weight:bold'>"+_selected.attributes.food_court+"</span>");
+	$("#cellLevels").empty();
+	$("#cellLevels").append("<div style='width:100px;float:left'>"+_selected.attributes.levels+"</span>");
+	$("#cellLevels").append(spanFoodCourt_Title);
+	$("#cellLevels").append(spanFoodCourt_Value);
+	
 }
 
 function situateMaps() {
@@ -298,7 +307,7 @@ function onArrowClick(event) {
                     </tr>
                     <tr>
                         <td class="columnTitle">Levels</td>
-                        <td class="columnData"></td>
+                        <td id="cellLevels" class="columnData"></td>
                         <td class="columnBlank"></td>
                     </tr>
                     <tr>
