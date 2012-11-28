@@ -59,11 +59,13 @@ var BASEMAP_URL = "http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/Wo
 var SATELLITE_URL = "http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
 var CSV_FILE = "data/Top50Malls_2012.csv";
 var MALL_ZOOM_LEVEL = 15;
+var FULL_ZOOM_LEVEL = 2;
+var MAP_MODE_SINGLE = 0;
+var MAP_MODE_ALL = 1;
 
 /******************************************************
 ***************** end config section ******************
 *******************************************************/
-
 
 var _dojoReady = false;
 var _jqueryReady = false;
@@ -77,6 +79,8 @@ var _locations;
 var _isMobile = isMobile();
 
 var _selected;
+
+var _mode = MAP_MODE_SINGLE;
 
 dojo.addOnLoad(function() {_dojoReady = true;init()});
 jQuery(document).ready(function() {_jqueryReady = true;init()});
@@ -105,9 +109,11 @@ function init() {
 	
 	_map = new esri.Map("map",{slider:false,wrapAround180:true});
 	_map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(SATELLITE_URL));
+	_map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_URL));
 	dojo.connect(_map, 'onLoad', init2);
 
 	_map2 = new esri.Map("map2",{slider:false,wrapAround180:true,logo:false});
+	_map2.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(SATELLITE_URL));
 	_map2.addLayer(new esri.layers.ArcGISTiledMapServiceLayer(BASEMAP_URL));	
 	dojo.connect(_map2, 'onLoad', init2);
 	
@@ -118,6 +124,9 @@ function init2(map) {
 	if (!_map.loaded) return;
 	if (!_map2.loaded) return;
 	if (!_locations) return;
+	
+	_map.getLayer(_map.layerIds[1]).hide();
+	_map2.getLayer(_map2.layerIds[0]).hide();
 	
 	_map.graphics.hide();
 	$(_locations).each(function(index, element) {
@@ -142,6 +151,8 @@ function init2(map) {
 	});
 
 	$(".arrow").click(onArrowClick)
+	
+	$("#flip").click(toggleMaps);
 
 }
 
@@ -192,6 +203,26 @@ function layer_onMouseOut(event)
 	*/
 }
 
+function toggleMaps() {
+	if (_mode == MAP_MODE_SINGLE) {
+		_mode = MAP_MODE_ALL;
+		_map.getLayer(_map.layerIds[1]).show();
+		_map2.getLayer(_map2.layerIds[0]).show();		
+		_map.getLayer(_map.layerIds[0]).hide();
+		_map2.getLayer(_map2.layerIds[1]).hide();
+		_map.centerAndZoom(_selected.geometry,FULL_ZOOM_LEVEL);
+		_map2.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL)
+	} else {
+		_mode = MAP_MODE_SINGLE;
+		_map.getLayer(_map.layerIds[0]).show();
+		_map2.getLayer(_map2.layerIds[1]).show();		
+		_map.getLayer(_map.layerIds[1]).hide();
+		_map2.getLayer(_map2.layerIds[0]).hide();		
+		_map.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL);
+		_map2.centerAndZoom(_selected.geometry,FULL_ZOOM_LEVEL)
+	}
+}
+
 function postSelection() {
 	populateFacts();
 	situateMaps();
@@ -227,8 +258,13 @@ function populateFacts() {
 function situateMaps() {
 	_map2.graphics.clear();
 	_map2.graphics.add(new esri.Graphic(_selected.geometry,new esri.symbol.PictureMarkerSymbol("images/purple.png",22,22)));
-	_map.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL);
-	_map2.centerAndZoom(_selected.geometry,2);
+	if (_mode == MAP_MODE_SINGLE) {
+		_map.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL);
+		_map2.centerAndZoom(_selected.geometry,FULL_ZOOM_LEVEL);
+	} else {
+		_map.centerAndZoom(_selected.geometry,FULL_ZOOM_LEVEL);
+		_map2.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL)		
+	}
 }
 
 function onArrowClick(event) {
