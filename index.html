@@ -207,6 +207,12 @@ function populateFacts() {
 	$("#cellWhere").append(_selected.attributes.city+", "+_selected.attributes.state);	
 	$("#cellSize").empty();
 	$("#cellSize").append(addCommas(_selected.attributes.leasable_area)+" leasable square feet");	
+	$("#cellOpened").empty();
+	var spanRenovated_Title = $("<span style='margin-left:50px;color:#898989;font-weight:normal'>Renovated</span>");
+	var spanRenovated_Value = $("<span style='margin-left:20px;color:#000000;font-weight:bold'>"+_selected.attributes.renovated+"</span>");
+	$("#cellOpened").append(_selected.attributes.opened);	
+	$("#cellOpened").append(spanRenovated_Title);
+	$("#cellOpened").append(spanRenovated_Value);
 }
 
 function situateMaps() {
@@ -287,7 +293,7 @@ function onArrowClick(event) {
                     </tr>
                     <tr>
                         <td class="columnTitle">Opened</td>
-                        <td class="columnData"></td>
+                        <td id="cellOpened" class="columnData"></td>
                         <td class="columnBlank"></td>
                     </tr>
                     <tr>
