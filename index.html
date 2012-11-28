@@ -96,6 +96,8 @@ function init() {
 	var locationsService = new LocationsService();		  
 	$(locationsService).bind("complete", function(){
 		_locations = locationsService.getLocations();
+		_selected = _locations[0];
+		populateFacts();
 		init2();
 	});
 	locationsService.process(CSV_FILE);		
@@ -125,8 +127,8 @@ function init2(map) {
 	dojo.connect(_map.graphics, "onMouseOut", layer_onMouseOut);
 	dojo.connect(_map.graphics, "onClick", layer_onClick);
 	
-	_selected = _locations[0];
-	postSelection(500);
+	setTimeout(situateMaps,500);
+	setTimeout(function(){_map.graphics.show()},1000);
 	
 	$("#zoomIn").click(function(e) {
 		_map.setLevel(_map.getLevel()+1);
@@ -162,7 +164,7 @@ function layer_onClick(event)
 {
 	_selected = event.graphic;
 	//var index = $.inArray(_selected,_locations);
-	postSelection(0);
+	postSelection();
 }
 
 function layer_onMouseOver(event)
@@ -188,21 +190,25 @@ function layer_onMouseOut(event)
 	*/
 }
 
-function postSelection(delay) {
+function postSelection() {
+	populateFacts();
+	situateMaps();
+}
+
+function populateFacts() {
 	$("#cellName").empty();
 	$("#cellName").append(_selected.attributes.name);
 	$("#cellDescription").empty();
 	$("#cellDescription").append(_selected.attributes.description);
 	$("#divRank").empty();
 	$("#divRank").append(_selected.attributes.rank);
-	
-	setTimeout(function(){
-		_map2.graphics.clear();
-		_map2.graphics.add(new esri.Graphic(_selected.geometry,new esri.symbol.PictureMarkerSymbol("images/purple.png",22,22)));
-		_map.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL);
-		_map2.centerAndZoom(_selected.geometry,2);
-		if (!_map.graphics.visible)	setTimeout(function(){_map.graphics.show()},1000);
-	},delay);
+}
+
+function situateMaps() {
+	_map2.graphics.clear();
+	_map2.graphics.add(new esri.Graphic(_selected.geometry,new esri.symbol.PictureMarkerSymbol("images/purple.png",22,22)));
+	_map.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL);
+	_map2.centerAndZoom(_selected.geometry,2);
 }
 
 function onArrowClick(event) {
@@ -215,7 +221,7 @@ function onArrowClick(event) {
 		else index--;
 	}
 	_selected = _locations[index];
-	postSelection(0);
+	postSelection();
 }
 
 </script>
