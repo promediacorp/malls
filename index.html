@@ -222,6 +222,9 @@ function populateFacts() {
 	$("#cellLevels").append(spanFoodCourt_Title);
 	$("#cellLevels").append(spanFoodCourt_Value);
 	
+	$("#cellWebsite").empty();
+	$("#cellWebsite").append("<a href='"+_selected.attributes.website+"' class='purple' target='_blank'>"+_selected.attributes.website+"</a>");	
+	
 }
 
 function situateMaps() {
@@ -312,7 +315,7 @@ function onArrowClick(event) {
                     </tr>
                     <tr>
                         <td class="columnTitle">Website</td>
-                        <td class="columnData"></td>
+                        <td id="cellWebsite" class="columnData"></td>
                         <td class="columnBlank"></td>
                     </tr>
                 </table>
