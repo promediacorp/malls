@@ -151,6 +151,7 @@ function handleWindowResize() {
 	dijit.byId("mainWindow").layout();
 	$("#map").height($("#mainWindow").height());
 	$("#map2").height($("#mainWindow").height()-$("#divTable").height());
+	$("#flip").css("top",$("#map2").height() / 2);
 	if (_map) _map.resize();
 	if (_map2) _map2.resize();
 	if (_selected) {
@@ -315,7 +316,7 @@ function onArrowClick(event) {
         
         <!--Map Section-->
         <div dojotype="dijit.layout.ContentPane" id="map" region="center">
-            <img src="images/Flip.png" class="flip"/>                    
+            <img id="flip" src="images/Flip.png" class="flip"/>                    
             <div id="zoomToggle">
                 <img id="zoomIn" src="images/ZoomLight_01.png">
                 <img id="zoomExtent" src="images/ZoomHome.png">
