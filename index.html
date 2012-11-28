@@ -203,6 +203,10 @@ function populateFacts() {
 	$("#cellDescription").append(_selected.attributes.description);
 	$("#divRank").empty();
 	$("#divRank").append(_selected.attributes.rank);
+	$("#cellWhere").empty();
+	$("#cellWhere").append(_selected.attributes.city+", "+_selected.attributes.state);	
+	$("#cellSize").empty();
+	$("#cellSize").append(addCommas(_selected.attributes.leasable_area)+" leasable square feet");	
 }
 
 function situateMaps() {
@@ -223,6 +227,19 @@ function onArrowClick(event) {
 	}
 	_selected = _locations[index];
 	postSelection();
+}
+
+function addCommas(nStr)
+{
+	nStr += '';
+	x = nStr.split('.');
+	x1 = x[0];
+	x2 = x.length > 1 ? '.' + x[1] : '';
+	var rgx = /(\d+)(\d{3})/;
+	while (rgx.test(x1)) {
+		x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	}
+	return x1 + x2;
 }
 
 </script>
@@ -273,12 +290,12 @@ function onArrowClick(event) {
                     </tr>
                     <tr>
                         <td class="columnTitle">Where</td>
-                        <td class="columnData"></td>
+                        <td id="cellWhere" class="columnData"></td>
                         <td class="columnBlank"></td>
                     </tr>
                     <tr>
                         <td class="columnTitle">Size</td>
-                        <td class="columnData"></td>
+                        <td id="cellSize" class="columnData"></td>
                         <td class="columnBlank"></td>
                     </tr>
                     <tr>
