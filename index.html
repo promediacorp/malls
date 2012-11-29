@@ -103,6 +103,7 @@ function init() {
 		_locations = locationsService.getLocations();
 		_selected = _locations[0];
 		populateFacts();
+		createChart();
 		init2();
 	});
 	locationsService.process(CSV_FILE);		
@@ -252,6 +253,33 @@ function populateFacts() {
 	$("#cellLevels").empty();
 	$("#cellLevels").append(_selected.attributes.levels);
 	
+}
+
+function createChart() {
+	var maxVal = getMax();
+	var tr = $("<tr></tr>");
+	var space,td,shell,bar,pct;
+	$.each(_locations,function(index,value) {
+		pct = (value.attributes.leasable_area / maxVal) * 100;
+		space = $("<td></td>");
+		td = $("<td></td>");
+		shell = $("<div class='barShell'></div>");
+		bar = $("<div class='bar' style='height:"+pct+"%'></div>");		
+		$(shell).append(bar);
+		$(td).append(shell);
+		$(tr).append(space);
+		$(tr).append(td);
+	});
+	$(tr).append("<td></td>");
+	$("#tableChart").append(tr);
+}
+
+function getMax() {
+	var maxVal = 0;
+	$.each(_locations,function(index,value) {
+		if (value.attributes.leasable_area > maxVal) maxVal = value.attributes.leasable_area;
+	});
+	return maxVal;
 }
 
 function situateMaps() {
@@ -407,33 +435,7 @@ function onArrowClick(event) {
                 </div><!--?zoomToggle-->
             </div>
             <div id="graphContainer">
-                <table id="tableChart">
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <div class="barShell">
-                                <div class="bar" style="height:70%"></div>
-                             </div>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <div class="barShell">
-                                <div class="bar" style="height:30%"></div>
-                             </div>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <div class="barShell">
-                                <div class="bar" style="height:60%"></div>
-                             </div>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                </table>
+                <table id="tableChart"></table>
             </div>
             <img id="flip" src="images/Flip.png" class="flip"/>                    
         </div>    
