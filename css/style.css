@@ -112,7 +112,6 @@ a:hover{
 	padding:0;
 	height:100%;
 	width:100%;
-	overflow:visible;
 }
 
 #hoverInfo{
@@ -158,6 +157,14 @@ a:hover{
 	overflow:hidden;
 }
 
+#rightPane {
+	style="border:none;
+	padding:0;
+	height:100%;
+	width:100%;
+	overflow:visible;
+}
+
 #map2 {
 	border:none;
 	padding:0;
@@ -166,7 +173,7 @@ a:hover{
 }
 
 #divTable {
-	height:500px;
+	height:480px;
 	overflow-y:auto;
 	overflow-x:hidden;
 }
@@ -226,3 +233,8 @@ a:hover{
 	cursor:pointer;
 }
 
+#bottom {
+	height:30%;
+	min-height:150px;
+	max-height:300px;
+}
