@@ -158,7 +158,7 @@ function init2(map) {
 
 function handleWindowResize() {
 	var heightDoc = getViewportDimensions()[1];
-	$("#mainWindow").height(heightDoc - ($("#header").height() + $("#bottom").height()));
+	$("#mainWindow").height(heightDoc - $("#header").height());
 	dijit.byId("mainWindow").layout();
 	$("#map").height($("#mainWindow").height());
 	$("#map2").height($("#mainWindow").height()-$("#divTable").height());
@@ -395,16 +395,7 @@ function onArrowClick(event) {
         </div><!--mapPane-->
             
       </div><!--/content-->    
-      
-      <div id="bottom">
-      	<table style="width:100%;height:100%">
-        	<tr>
-            	<td style="text-align:center;vertical-align:middle">Graph will go here.</td>
-            </tr>
-        </table>
-      </div>
-
-        
+              
 </body>
 
 </html>

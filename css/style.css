@@ -166,7 +166,7 @@ a:hover{
 }
 
 #divTable {
-	height:340px;
+	height:500px;
 	overflow-y:auto;
 	overflow-x:hidden;
 }
@@ -213,12 +213,6 @@ a:hover{
 	border-bottom:none;
 	border-left:none;
 	border-top:none;	
-}
-
-#bottom {
-	height:20%;
-	min-height:120px;
-	max-height:300px;
 }
 
 .flip {
