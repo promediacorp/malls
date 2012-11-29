@@ -265,7 +265,13 @@ function situateMaps() {
 		_map.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL);
 		_map2.centerAndZoom(_selected.geometry,FULL_ZOOM_LEVEL);
 	} else {
-		_map.centerAndZoom(_selected.geometry,FULL_ZOOM_LEVEL);
+		if (!_map.extent.contains(_selected.geometry)) {
+			_map.centerAt(_selected.geometry);
+		} else {
+			// basically, just re-center the map where it already
+			// is -- this is to get the map to refresh...
+			_map.centerAt(_map.extent.getCenter());
+		}
 		_map2.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL)		
 	}
 }
