@@ -233,7 +233,7 @@ a:hover{
 	cursor:pointer;
 }
 
-#bottom {
+#graphContainer {
 	height:30%;
 	min-height:150px;
 	max-height:300px;
