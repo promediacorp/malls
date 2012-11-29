@@ -278,11 +278,11 @@ function situateMaps() {
 
 function onArrowClick(event) {
 	var index = $.inArray(_selected,_locations);
-	if (event.target.id == "arrowRight") {
-		if (index == _locations.length) index = 0;
-		else index++
+	if (event.target.id == "arrowDown") {
+		if (index == _locations.length - 1) index = 0;
+		else index++;
 	} else {
-		if (index == 0) index = _locations.length;
+		if (index == 0) index = _locations.length - 1;
 		else index--;
 	}
 	_selected = _locations[index];
@@ -317,7 +317,7 @@ function onArrowClick(event) {
             <div id="divTable">
                 <table id="tableDetails">
                 	<tr>
-                    	<td id="cellName" colspan="2" height="50px" class="purple" style="vertical-align:middle;font-weight:bold;font-size:18px">Westfield Old Orchard</td>
+                    	<td id="cellName" colspan="2" height="50px" class="purple" style="vertical-align:middle;font-size:18px">Westfield Old Orchard</td>
                     </tr>
                 	<tr>
                     	<td id="cellDescription" colspan="2" class="black" style="height:100px">Westfield is one the oldest malls in the top fifty, dating to 1956.  Blah, blah, blah...</td>
@@ -325,9 +325,23 @@ function onArrowClick(event) {
                     <tr>
                     	<td rowspan="2" class="leftcell">
                         	<span class="gray">Rank</span>
-                        	<br />
-                        	<span id="cellRank" class="black"></span>
-                        </td>
+                            <table style="width:100%;height:100%">
+                            	<tr style="border:none">
+                                	<td style="height:26px;text-align:center">
+                                    <img id="arrowUp" class="arrow" src="images/picture_up.png" />
+                                    </td>
+                                <tr>
+                            	<tr style="border:none">
+                                	<td style="height:30px;text-align:center;vertical-align:middle">
+	                                    <span id="cellRank" class="purple" style="font-size:24px"></span>
+                                    </td>
+                                <tr>
+                            	<tr style="border:none">
+                                	<td style="height:26px;text-align:center">
+                                    <img id="arrowDown" class="arrow" src="images/picture_down.png" />
+                                    </td>
+                                <tr>
+                            </table>                        </td>
                     	<td>
                         	<span class="gray">Where</span>
                         	<br />

@@ -202,6 +202,7 @@ a:hover{
 
 #tableDetails .purple {
 	color:#9e52ce;
+	font-weight:bold;
 }
 
 #tableDetails .gray {
@@ -237,4 +238,8 @@ a:hover{
 	height:30%;
 	min-height:150px;
 	max-height:300px;
+}
+
+.arrow {
+	cursor:pointer;
 }
