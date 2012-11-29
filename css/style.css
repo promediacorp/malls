@@ -223,6 +223,10 @@ a:hover{
 	border-top:none;	
 }
 
+#tableArrows tr {
+	border:none;
+}
+
 .flip {
 	position:absolute;
 	z-index:1000;
