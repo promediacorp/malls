@@ -238,12 +238,13 @@ a:hover{
 	cursor:pointer;
 }
 
-#graphContainer {
-	height:30%;
-}
-
 .arrow {
 	cursor:pointer;
+}
+
+#graphContainer {
+	height:30%;
+	background-color:#e4e4e4;
 }
 
 #tableChart {
@@ -270,5 +271,5 @@ a:hover{
 	position:absolute;
 	bottom:0px;
 	width:100%;
-	background-color:#9966FF;	
+	background-color:#9e52ce;	
 }
