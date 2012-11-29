@@ -245,3 +245,30 @@ a:hover{
 .arrow {
 	cursor:pointer;
 }
+
+#tableChart {
+	width:100%;
+	height:100%;	
+}
+
+#tableChart tr {
+	height:100%;
+	width:100%;
+}
+
+#tableChart td {
+	height:100%;
+}
+
+.barShell {
+	position:relative;
+	width:100%;
+	height:100%;
+}
+
+.bar {
+	position:absolute;
+	bottom:0px;
+	width:100%;
+	background-color:#9966FF;	
+}
