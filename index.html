@@ -160,7 +160,7 @@ function handleWindowResize() {
 	var heightDoc = getViewportDimensions()[1];
 	$("#mainWindow").height(heightDoc - $("#header").height());
 	dijit.byId("mainWindow").layout();
-	$("#map").height($("#mainWindow").height() - $("#bottom").height());
+	$("#map").height($("#mainWindow").height() - $("#graphContainer").height());
 	$("#map2").height($("#mainWindow").height()-$("#divTable").height());
 	$("#flip").css("top",$("#map2").height() / 2);
 	if (_map) _map.resize();
