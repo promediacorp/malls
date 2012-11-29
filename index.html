@@ -233,26 +233,25 @@ function populateFacts() {
 	$("#cellName").append("<a href='"+_selected.attributes.website+"' class='purple' target='_blank'>"+_selected.attributes.name+"</a>");
 	$("#cellDescription").empty();
 	$("#cellDescription").append(_selected.attributes.description);
-	$("#divRank").empty();
-	$("#divRank").append(_selected.attributes.rank);
+	$("#cellRank").empty();
+	$("#cellRank").append(_selected.attributes.rank);
 	$("#cellWhere").empty();
 	$("#cellWhere").append(_selected.attributes.city+", "+_selected.attributes.state);	
 	$("#cellSize").empty();
 	$("#cellSize").append(addCommas(_selected.attributes.leasable_area)+" leasable square feet");	
-
-	var spanRenovated_Title = $("<span style='margin-left:50px;color:#898989;font-weight:normal'>Renovated</span>");
-	var spanRenovated_Value = $("<span style='margin-left:20px;color:#000000;font-weight:bold'>"+_selected.attributes.renovated+"</span>");
 	$("#cellOpened").empty();
-	$("#cellOpened").append("<div style='width:100px;float:left'>"+_selected.attributes.opened+"</span>");	
-	$("#cellOpened").append(spanRenovated_Title);
-	$("#cellOpened").append(spanRenovated_Value);
-	
-	var spanFoodCourt_Title = $("<span style='margin-left:50px;color:#898989;font-weight:normal'>Food Court</span>");
-	var spanFoodCourt_Value = $("<span style='margin-left:20px;color:#000000;font-weight:bold'>"+_selected.attributes.food_court+"</span>");
+	$("#cellOpened").append(_selected.attributes.opened);	
+	$("#cellNumberStores").empty();
+	$("#cellNumberStores").append(_selected.attributes.number_stores);	
+	$("#cellRenovated").empty();
+	$("#cellRenovated").append(_selected.attributes.renovated);	
+	$("#cellParkingPlaces").empty();
+	$("#cellParkingPlaces").append(_selected.attributes.parking_places);	
+	$("#cellFoodCourt").empty();
+	$("#cellFoodCourt").append(_selected.attributes.food_court);
 	$("#cellLevels").empty();
-	$("#cellLevels").append("<div style='width:100px;float:left'>"+_selected.attributes.levels+"</span>");
-	$("#cellLevels").append(spanFoodCourt_Title);
-	$("#cellLevels").append(spanFoodCourt_Value);	
+	$("#cellLevels").append(_selected.attributes.levels);
+	
 }
 
 function situateMaps() {
@@ -311,44 +310,69 @@ function onArrowClick(event) {
           	<div id="map2"></div>
             <div id="divTable">
                 <table id="tableDetails">
-                    <tr>
-                        <td class="columnTitle">Mall</td>
-                        <td id="cellName" class="columnData purple" height="20px"></td>
-                        <td class="columnBlank"></td>
+                	<tr>
+                    	<td id="cellName" colspan="2" height="50px" class="purple" style="vertical-align:middle;font-weight:bold;font-size:18px">Westfield Old Orchard</td>
+                    </tr>
+                	<tr>
+                    	<td id="cellDescription" colspan="2" class="black" style="height:100px">Westfield is one the oldest malls in the top fifty, dating to 1956.  Blah, blah, blah...</td>
                     </tr>
                     <tr>
-                        <td class="columnTitle">Factoid</td>
-                        <td id="cellDescription" class="columnData" height="100px"></td>
-                        <td class="columnBlank"></td>
-                    </tr>
-                    <tr>
-                        <td class="columnTitle">Rank</td>
-                        <td id="cellRank" class="columnData purple" height="40px" style="font-size:60px">
- 	                        <img id='arrowLeft' class='arrow' src='images/picture_left.png'</img>
-                            <div id="divRank"></div>
-                            <img id='arrowRight' class='arrow' src='images/picture_right.png'</img>
+                    	<td rowspan="2" class="leftcell">
+                        	<span class="gray">Rank</span>
+                        	<br />
+                        	<span id="cellRank" class="black"></span>
                         </td>
-                        <td class="columnBlank"></td>
+                    	<td>
+                        	<span class="gray">Where</span>
+                        	<br />
+                        	<span id="cellWhere" class="black"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td class="columnTitle">Where</td>
-                        <td id="cellWhere" class="columnData"></td>
-                        <td class="columnBlank"></td>
+                    	<td>
+                        	<span class="gray">Size</span>
+                        	<br />
+                        	<span id="cellSize" class="black"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td class="columnTitle">Size</td>
-                        <td id="cellSize" class="columnData"></td>
-                        <td class="columnBlank"></td>
+                    	<td class="leftcell">
+                        	<span class="gray">Opened</span>
+                        	<br />
+                        	<span id="cellOpened" class="black"></span>
+                        </td>
+                    	<td>
+                        	<span class="gray">Number of Stores</span>
+                        	<br />
+                        	<span id="cellNumberStores" class="black"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td class="columnTitle">Opened</td>
-                        <td id="cellOpened" class="columnData"></td>
-                        <td class="columnBlank"></td>
+                    	<td class="leftcell">
+                        	<span class="gray">Renovated</span>
+                        	<br />
+                        	<span id="cellRenovated" class="black"></span>
+                        </td>
+                    	<td>
+                        	<span class="gray">Parking Places</span>
+                        	<br />
+                        	<span id="cellParkingPlaces" class="black"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td class="columnTitle">Levels</td>
-                        <td id="cellLevels" class="columnData"></td>
-                        <td class="columnBlank"></td>
+                    	<td class="leftcell">
+                        	<span class="gray">Food Court</span>
+                        	<br />
+                        	<span id="cellFoodCourt" class="black"></span>
+                        </td>
+                    	<td>
+                        	<span class="gray">Levels</span>
+                        	<br />
+                        	<span id="cellLevels" class="black"></span>
+                        </td>
+                    </tr>
+                    <tr style="border-bottom:none">
+                    	<td colspan="2" class="gray" style="vertical-align:middle">Source: Directory of Major Malls, 2012</td>
                     </tr>
                 </table>
         	</div>

@@ -175,56 +175,50 @@ a:hover{
 	font-family:Verdana, Geneva, sans-serif;
 	padding-left:10px;
 	width:100%;
-	height:340px;
 }
 
-.columnTitle {
-	width:70px;
-	padding-top:5px;
-	padding-bottom:5px;
-	padding-right:20px;
-	text-align:right;
-	color:#898989;
-}
-
-.columnData {
-	padding-top:5px;
-	padding-bottom:5px;
-	color:#000;
+#tableDetails tr {
 	border:solid;
 	border-color:#898989;
-	border-width:thin;
+	border-width:thin;	
 	border-right:none;
 	border-left:none;
-	border-top:none;
+	border-top:none;	
+}
+
+#tableDetails td {
+	padding-left:10px;
+	padding-right:10px;
+	width:50%;
+	height:50px
+}
+
+#tableDetails .purple {
+	color:#9e52ce;
+}
+
+#tableDetails .gray {
+	color: #898989;
+}
+
+#tableDetails .black {
+	color: #000;
 	font-weight:bold;
 }
 
-.columnBlank {
-	width:25px;
-}
-
-.purple {
-	color:#9e52ce;
+#tableDetails .leftcell {
+	border:solid;
+	border-color:#898989;
+	border-width:thin;	
+	border-bottom:none;
+	border-left:none;
+	border-top:none;	
 }
 
 #bottom {
 	height:20%;
 	min-height:120px;
 	max-height:300px;
-}
-
-.arrow {
-	cursor:pointer;
-	float:left;
-}
-
-#divRank {
-	float:left;
-	text-align:center;
-	width:100px;
-	height:50px;
-	margin-top:-14px;
 }
 
 .flip {
@@ -237,3 +231,4 @@ a:hover{
 	height:50px;
 	cursor:pointer;
 }
+
