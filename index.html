@@ -162,6 +162,7 @@ function handleWindowResize() {
 	$("#mainWindow").height(heightDoc - $("#header").height());
 	dijit.byId("mainWindow").layout();
 	$("#map").height($("#mainWindow").height() - $("#graphContainer").height());
+	$("#tableChart").height($("#graphContainer").height() - 20);
 	$("#map2").height($("#mainWindow").height()-$("#divTable").height());
 	$("#flip").css("top",$("#map2").height() / 2);
 	if (_map) _map.resize();
