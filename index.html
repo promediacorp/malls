@@ -76,6 +76,9 @@ var _map2;
 
 var _locations;
 
+var _layerOthers;
+var _layerSpecial;
+
 var _isMobile = isMobile();
 
 var _selected;
@@ -131,17 +134,23 @@ function init2(map) {
 	_map.getLayer(_map.layerIds[1]).hide();
 	_map2.getLayer(_map2.layerIds[0]).hide();
 	
-	_map.graphics.hide();
+	_layerOthers = new esri.layers.GraphicsLayer();
+	_layerSpecial = new esri.layers.GraphicsLayer();
+	_layerOthers.hide();
+	_layerSpecial.hide();
 	$(_locations).each(function(index, element) {
-	   _map.graphics.add(element); 
+	   _layerOthers.add(element); 
 	});	
+	_map.addLayer(_layerOthers);
+	_map.addLayer(_layerSpecial);
 	
-	dojo.connect(_map.graphics, "onMouseOver", layer_onMouseOver);
-	dojo.connect(_map.graphics, "onMouseOut", layer_onMouseOut);
-	dojo.connect(_map.graphics, "onClick", layer_onClick);
+	dojo.connect(_layerOthers, "onMouseOver", layer_onMouseOver);
+	dojo.connect(_layerOthers, "onMouseOut", layer_onMouseOut);
+	dojo.connect(_layerOthers, "onClick", layer_onClick);
 	
 	setTimeout(situateMaps,500);
-	setTimeout(function(){_map.graphics.show()},1000);
+	setTimeout(function(){_layerSpecial.show()},1000);
+	setTimeout(function(){_layerOthers.show()},1000);
 	
 	$("#zoomIn").click(function(e) {
 		_map.setLevel(_map.getLevel()+1);
@@ -311,10 +320,21 @@ function getMax() {
 function situateMaps() {
 	_map2.graphics.clear();
 	_map2.graphics.add(new esri.Graphic(_selected.geometry,new esri.symbol.PictureMarkerSymbol("images/PurplePin.png",21,24).setOffset(0,7)));
-	$.each(_locations,function(index,value){
-		value.symbol.setWidth(21).setHeight(24).setOffset(0,7);
-	});
+	// remove formerly selected graphic from special layer,
+	// restore its hum-drum symbol status and re-add it with
+	// the others.
+	if (_layerSpecial.graphics.length > 0) {
+		var old = _layerSpecial.graphics[0];
+		old.symbol.setWidth(21).setHeight(24).setOffset(0,7);
+		_layerSpecial.remove(old);
+		_layerOthers.add(old);
+	}
+	// change the currently selected graphic's symbol status,
+	// remove it from the others and put it in the special
+	// layer.
 	_selected.symbol.setWidth(28).setHeight(32).setOffset(0,9);
+	_layerOthers.remove(_selected);
+	_layerSpecial.add(_selected);
 	if (_mode == MAP_MODE_SINGLE) {
 		_map.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL);
 		_map2.centerAndZoom(_selected.geometry,FULL_ZOOM_LEVEL);
