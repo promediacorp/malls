@@ -104,6 +104,8 @@ function init() {
 		_selected = _locations[0];
 		populateFacts();
 		createChart();
+		createPointer();
+		positionPointer();
 		init2();
 	});
 	locationsService.process(CSV_FILE);		
@@ -205,6 +207,11 @@ function layer_onMouseOut(event)
 	*/
 }
 
+function onBarClick(event) {
+	_selected = _locations[$.inArray(event.target,$(".bar"))];
+	postSelection();
+}
+
 function toggleMaps() {
 	if (_mode == MAP_MODE_SINGLE) {
 		_mode = MAP_MODE_ALL;
@@ -228,6 +235,22 @@ function toggleMaps() {
 function postSelection() {
 	populateFacts();
 	situateMaps();
+	createPointer();
+	positionPointer();
+}
+
+function createPointer() {
+	$(".bar").empty();
+	var bar = $(".bar")[$.inArray(_selected,_locations)];
+	var div = $("<div id='pointerThingie'>"+_selected.attributes.name+"</div>");
+	$(bar).append(div);
+}
+
+function positionPointer() {
+	var bar = $(".bar")[$.inArray(_selected,_locations)];
+	var div = $(bar).find("#pointerThingie");
+	$(div).css("left",($(bar).width()/2)-($(div).width()/2));
+	$(div).css("top",-($(div).height()+7));	
 }
 
 function populateFacts() {
@@ -256,6 +279,7 @@ function populateFacts() {
 	
 }
 
+
 function createChart() {
 	var maxVal = getMax();
 	var tr = $("<tr></tr>");
@@ -273,6 +297,7 @@ function createChart() {
 	});
 	$(tr).append("<td></td>");
 	$("#tableChart").append(tr);
+	$(".bar").click(onBarClick);
 }
 
 function getMax() {
