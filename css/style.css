@@ -280,9 +280,8 @@ a:hover{
 }
 
 #pointerThingie {
-	background-color:#9e52ce;
 	position:absolute;
 	color:white;
-	padding:2px;
 	font-family:Verdana, Geneva, sans-serif;
+	padding-bottom:10px;
 }

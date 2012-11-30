@@ -176,6 +176,7 @@ function handleWindowResize() {
 	$("#tableChart").height($("#graphContainer").height() - 20);
 	$("#map2").height($("#mainWindow").height()-$("#divTable").height());
 	$("#flip").css("top",$("#map2").height() / 2);
+	positionPointer();
 	if (_map) _map.resize();
 	if (_map2) _map2.resize();
 	if (_selected) {
@@ -251,15 +252,21 @@ function postSelection() {
 function createPointer() {
 	$(".bar").empty();
 	var bar = $(".bar")[$.inArray(_selected,_locations)];
-	var div = $("<div id='pointerThingie'>"+_selected.attributes.name+"</div>");
+	var div = $("<div id='pointerThingie'></div>");
+	var inner = $("<div style='position:relative'></div>");
+	var arrow = $("<img src='images/arrow_down_purple.png' style='position:absolute;width:20px'></img>");
+	$(inner).append("<div style='background-color:#9e52ce;padding:4px'>"+_selected.attributes.name+"</div>");
+	$(inner).append(arrow);
+	$(div).append(inner);
 	$(bar).append(div);
+	$(arrow).css("left",(($(inner).width() - $(arrow).width())/2)-1);
 }
 
 function positionPointer() {
 	var bar = $(".bar")[$.inArray(_selected,_locations)];
 	var div = $(bar).find("#pointerThingie");
 	$(div).css("left",($(bar).width()/2)-($(div).width()/2));
-	$(div).css("top",-($(div).height()+7));	
+	$(div).css("top",-($(div).height()+15));	
 }
 
 function populateFacts() {
