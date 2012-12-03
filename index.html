@@ -109,6 +109,7 @@ function init() {
 		createChart();
 		createPointer();
 		positionPointer();
+		selectBar();
 		init2();
 	});
 	locationsService.process(CSV_FILE);		
@@ -246,6 +247,7 @@ function postSelection() {
 	populateFacts();
 	situateMaps();
 	createPointer();
+	selectBar();
 	positionPointer();
 }
 
@@ -267,6 +269,12 @@ function positionPointer() {
 	var div = $(bar).find("#pointerThingie");
 	$(div).css("left",($(bar).width()/2)-($(div).width()/2));
 	$(div).css("top",-($(div).height()+15));	
+}
+
+function selectBar() {
+	$(".bar").css("background-color","#96739c");
+	var bar = $(".bar")[$.inArray(_selected,_locations)];
+	$(bar).css("background-color","#9e52ce");
 }
 
 function populateFacts() {
