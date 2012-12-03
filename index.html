@@ -110,6 +110,7 @@ function init() {
 		createPointer();
 		positionPointer();
 		selectBar();
+		determineTie();
 		init2();
 	});
 	locationsService.process(CSV_FILE);		
@@ -177,6 +178,7 @@ function handleWindowResize() {
 	$("#tableChart").height($("#graphContainer").height() - 20);
 	$("#map2").height($("#mainWindow").height()-$("#divTable").height());
 	$("#flip").css("top",$("#map2").height() / 2);
+	$("#tie").css("left",($("#divTable").width() / 4)+40);
 	positionPointer();
 	if (_map) _map.resize();
 	if (_map2) _map2.resize();
@@ -245,6 +247,7 @@ function postSelection() {
 	createPointer();
 	selectBar();
 	positionPointer();
+	determineTie();
 }
 
 function createPointer() {
@@ -271,6 +274,14 @@ function selectBar() {
 	$(".bar").css("background-color","#ba87c3");
 	var bar = $(".bar")[$.inArray(_selected,_locations)];
 	$(bar).css("background-color","#9e52ce");
+}
+
+function determineTie() {
+	if ($.grep(_locations,function(n,i){return n.attributes.rank == _selected.attributes.rank}).length > 1) {
+		$("#tie").fadeIn();
+	} else {
+		$("#tie").fadeOut();		
+	}
 }
 
 function populateFacts() {
@@ -436,7 +447,7 @@ function hoverInfoPos(x,y){
                                     </td>
                                 <tr>
                             	<tr>
-                                	<td style="height:30px;text-align:center;vertical-align:top">
+                                	<td style="height:30px;text-align:center;vertical-align:top;position:relative">
 	                                    <div id="cellRank" class="purple" style="font-size:50px;height:50px;margin-top:-10px"></div>
                                     </td>
                                 <tr>
@@ -445,7 +456,8 @@ function hoverInfoPos(x,y){
                                     <img id="arrowDown" class="arrow" src="images/picture_down.png" />
                                     </td>
                                 <tr>
-                            </table>                        </td>
+                            </table>                        
+                        </td>
                     	<td style="height:55px">
                         	<span class="gray">Where</span>
                         	<br />
@@ -499,6 +511,7 @@ function hoverInfoPos(x,y){
                     	<td colspan="2" class="gray" style="vertical-align:middle">Source: Directory of Major Malls, 2012</td>
                     </tr>
                 </table>
+                <span id="tie" class="gray" style="font-family:Arial, Helvetica, sans-serif;position:absolute;top:130px;display:none">tie</span>
         	</div>
         </div><!--/leftPane-->
 

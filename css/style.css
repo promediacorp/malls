@@ -178,6 +178,7 @@ a:hover{
 	height:344px;
 	overflow-y:auto;
 	overflow-x:hidden;
+	position:relative;
 }
 
 #tableDetails {
@@ -207,7 +208,7 @@ a:hover{
 	font-weight:bold;
 }
 
-#tableDetails .gray {
+.gray {
 	color: #898989;
 }
 
