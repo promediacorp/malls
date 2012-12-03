@@ -268,7 +268,7 @@ function positionPointer() {
 }
 
 function selectBar() {
-	$(".bar").css("background-color","#96739c");
+	$(".bar").css("background-color","#ba87c3");
 	var bar = $(".bar")[$.inArray(_selected,_locations)];
 	$(bar).css("background-color","#9e52ce");
 }
@@ -336,7 +336,7 @@ function situateMaps() {
 	// the others.
 	if (_layerSpecial.graphics.length > 0) {
 		var old = _layerSpecial.graphics[0];
-		old.setSymbol(new esri.symbol.PictureMarkerSymbol("images/PurpleGrayPin.png"));
+		old.setSymbol(new esri.symbol.PictureMarkerSymbol("images/PurplePinLighter.png"));
 		old.symbol.setWidth(21).setHeight(24).setOffset(0,7);
 		_layerSpecial.remove(old);
 		_layerOthers.add(old);
