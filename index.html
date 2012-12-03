@@ -313,7 +313,7 @@ function createChart() {
 		space = $("<td></td>");
 		td = $("<td></td>");
 		shell = $("<div class='barShell'></div>");
-		bar = $("<div class='bar' style='height:"+pct+"%'></div>");		
+		bar = $("<div class='bar' style='height:"+pct+"%' title='"+value.attributes.name+"'></div>");		
 		$(shell).append(bar);
 		$(td).append(shell);
 		$(tr).append(space);
