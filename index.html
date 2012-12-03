@@ -279,7 +279,7 @@ function populateFacts() {
 	$("#cellWhere").empty();
 	$("#cellWhere").append(_selected.attributes.city+", "+_selected.attributes.state);	
 	$("#cellSize").empty();
-	$("#cellSize").append(addCommas(_selected.attributes.leasable_area)+" leasable square feet");	
+	$("#cellSize").append(addCommas(_selected.attributes.leasable_area));	
 	$("#cellOpened").empty();
 	$("#cellOpened").append(_selected.attributes.opened);	
 	$("#cellNumberStores").empty();
@@ -408,7 +408,7 @@ function onArrowClick(event) {
                         	<span class="gray">Rank</span>
                             <table id="tableArrows" style="width:100%;height:100%;margin-top:-15px">
                             	<tr>
-                                	<td style="height:26px;text-align:center">
+                                	<td style="height:20px;text-align:center">
                                     <img id="arrowUp" class="arrow" src="images/picture_up.png" />
                                     </td>
                                 <tr>
@@ -418,12 +418,12 @@ function onArrowClick(event) {
                                     </td>
                                 <tr>
                             	<tr>
-                                	<td style="height:26px;text-align:center">
+                                	<td style="height:20px;text-align:center">
                                     <img id="arrowDown" class="arrow" src="images/picture_down.png" />
                                     </td>
                                 <tr>
                             </table>                        </td>
-                    	<td>
+                    	<td style="height:65px">
                         	<span class="gray">Where</span>
                         	<br />
                         	<span id="cellWhere" class="black"></span>
@@ -431,7 +431,7 @@ function onArrowClick(event) {
                     </tr>
                     <tr>
                     	<td>
-                        	<span class="gray">Size</span>
+                        	<span class="gray">Size (leasable sq. ft.)</span>
                         	<br />
                         	<span id="cellSize" class="black"></span>
                         </td>

@@ -173,7 +173,7 @@ a:hover{
 }
 
 #divTable {
-	height:480px;
+	height:400px;
 	overflow-y:auto;
 	overflow-x:hidden;
 }
@@ -197,7 +197,7 @@ a:hover{
 	padding-left:10px;
 	padding-right:10px;
 	width:50%;
-	height:50px
+	height:35px
 }
 
 #tableDetails .purple {
@@ -212,6 +212,7 @@ a:hover{
 #tableDetails .black {
 	color: #000;
 	font-weight:bold;
+	font-size:14px;
 }
 
 #tableDetails .leftcell {
@@ -240,6 +241,7 @@ a:hover{
 
 .arrow {
 	cursor:pointer;
+	height:20px;
 }
 
 #graphContainer {
