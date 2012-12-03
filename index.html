@@ -190,8 +190,8 @@ function handleWindowResize() {
 
 function layer_onClick(event)
 {
+	$("#hoverInfo").hide();	
 	_selected = event.graphic;
-	//var index = $.inArray(_selected,_locations);
 	postSelection();
 }
 
@@ -199,23 +199,19 @@ function layer_onMouseOver(event)
 {
 	if (_isMobile) return;	
 	_map.setMapCursor("pointer");
-	/*
 	var graphic = event.graphic;
-	graphic.setSymbol(graphic.symbol.setHeight(30).setWidth(24));
+	graphic.setSymbol(graphic.symbol.setWidth(25).setHeight(28).setOffset(0,8));
 	$("#hoverInfo").html(graphic.attributes.name);
 	var pt = _map.toScreen(graphic.geometry);
 	hoverInfoPos(pt.x,pt.y);	
-	*/
 }
 
 function layer_onMouseOut(event)
 {
 	_map.setMapCursor("default");
-	/*
 	var graphic = event.graphic;	
-	graphic.setSymbol(graphic.symbol.setHeight(28).setWidth(22));
+	graphic.setSymbol(graphic.symbol.setWidth(21).setHeight(24).setOffset(0,7));
 	$("#hoverInfo").hide();	
-	*/
 }
 
 function onBarClick(event) {
@@ -380,6 +376,23 @@ function onArrowClick(event) {
 	postSelection();
 }
 
+function hoverInfoPos(x,y){
+	if (x <= ($("#map").width())-230){
+		$("#hoverInfo").css("left",x+15);
+	}
+	else{
+		$("#hoverInfo").css("left",x-25-($("#hoverInfo").width()));
+	}
+	if (y >= ($("#hoverInfo").height())+50){
+		$("#hoverInfo").css("top",y-35-($("#hoverInfo").height()));
+	}
+	else{
+		$("#hoverInfo").css("top",y-15+($("#hoverInfo").height()));
+	}
+	$("#hoverInfo").show();
+}
+
+
 </script>
 
 </head>
@@ -496,6 +509,7 @@ function onArrowClick(event) {
                     <img id="zoomExtent" src="images/ZoomHome.png">
                     <img id="zoomOut" src="images/ZoomLight_03.png">
                 </div><!--?zoomToggle-->
+                <div id="hoverInfo"></div>
             </div>
             <div id="graphContainer">
                 <table id="tableChart"></table>
