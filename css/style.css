@@ -115,24 +115,25 @@ a:hover{
 }
 
 #hoverInfo{
-	font-size:10px;
-	font-family:Verdana, Geneva, sans-serif;
+	font-size:11px;
+	font-family:Arial, Helvetica, sans-serif;
 	position:absolute;
-	padding:5px;
+	padding:1px;
 	max-width:200px;
-	background-color:#FFC;
-	border:#848484 solid 1px;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-	-moz-box-shadow: 2px 2px 10px #333;
-	-webkit-box-shadow: 2px 2px 10px #333;
-	box-shadow: 2px 2px 10px #333;
+	background-color:#ffffe1;
+	border:#000000 solid 1px;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+	-moz-box-shadow: 5px 1px 5px #333;
+	-webkit-box-shadow: 5px 1px 5px #333;
+	box-shadow: 1px 2px 5px -2px #333;
 	filter: progid: DXImageTransform.Microsoft.Shadow(strength = 2, direction = 135, color = '#333333');
 	-ms-filter: "progid: DXImageTransform.Microsoft.Shadow(strength = 2, Direction = 135, Color = '#333333')";
 	overflow:hidden;
 	display:none;
 	z-index:100;
+	color:#000000;
 }
 
 #zoomToggle{
