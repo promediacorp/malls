@@ -119,6 +119,7 @@ a:hover{
 	font-family:Arial, Helvetica, sans-serif;
 	position:absolute;
 	padding:1px;
+	padding-right:2px;
 	max-width:200px;
 	background-color:#ffffe1;
 	border:#000000 solid 1px;
