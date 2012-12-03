@@ -332,6 +332,7 @@ function situateMaps() {
 	// the others.
 	if (_layerSpecial.graphics.length > 0) {
 		var old = _layerSpecial.graphics[0];
+		old.setSymbol(new esri.symbol.PictureMarkerSymbol("images/PurpleGrayPin.png"));
 		old.symbol.setWidth(21).setHeight(24).setOffset(0,7);
 		_layerSpecial.remove(old);
 		_layerOthers.add(old);
@@ -339,6 +340,7 @@ function situateMaps() {
 	// change the currently selected graphic's symbol status,
 	// remove it from the others and put it in the special
 	// layer.
+	_selected.setSymbol(new esri.symbol.PictureMarkerSymbol("images/PurplePin.png"));
 	_selected.symbol.setWidth(28).setHeight(32).setOffset(0,9);
 	_layerOthers.remove(_selected);
 	_layerSpecial.add(_selected);
