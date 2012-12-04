@@ -225,9 +225,13 @@ function onBarMouseOver(event) {
 	if (_isMobile) return;	
 	var name = _locations[$.inArray(event.target,$(".bar"))].attributes.name;
 	var barTip = $("<div id='barTip'>"+name+"</div>");
-	barTip.css("left",event.clientX - $("#divTable").width());
-	barTip.css("top",event.clientY - (($("#map").height() + $("#header").height())-30));
+	barTip.css("top",event.clientY - (($("#map").height() + $("#header").height())+30));
 	$("#graphContainer").append(barTip);
+	var left = event.clientX - $("#divTable").width();
+	if ((left + $(barTip).width())>$("#graphContainer").width()) {
+		left = left - ((left + $(barTip).width()) - $("#graphContainer").width());
+	}
+	$(barTip).css("left",left); 
 }
 
 function onBarMouseOut(event) {
