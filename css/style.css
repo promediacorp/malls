@@ -254,6 +254,7 @@ a:hover{
 	padding-right:10px;
 	padding-bottom:10px;
 	padding-top:10px;	
+	position:relative;
 }
 
 #tableChart {
@@ -289,4 +290,26 @@ a:hover{
 	color:white;
 	font-family:Verdana, Geneva, sans-serif;
 	padding-bottom:10px;
+}
+
+#barTip {
+	position:absolute;
+	font-size:11px;
+	font-family:Arial, Helvetica, sans-serif;
+	padding:1px;
+	padding-right:2px;
+	max-width:200px;
+	background-color:#ffffe1;
+	border:#000000 solid 1px;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+	-moz-box-shadow: 5px 1px 5px #333;
+	-webkit-box-shadow: 5px 1px 5px #333;
+	box-shadow: 1px 2px 5px -2px #333;
+	filter: progid: DXImageTransform.Microsoft.Shadow(strength = 2, direction = 135, color = '#333333');
+	-ms-filter: "progid: DXImageTransform.Microsoft.Shadow(strength = 2, Direction = 135, Color = '#333333')";
+	overflow:hidden;
+	z-index:100;
+	color:#000000;
 }

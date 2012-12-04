@@ -221,6 +221,19 @@ function onBarClick(event) {
 	postSelection();
 }
 
+function onBarMouseOver(event) {
+	if (_isMobile) return;	
+	var name = _locations[$.inArray(event.target,$(".bar"))].attributes.name;
+	var barTip = $("<div id='barTip'>"+name+"</div>");
+	barTip.css("left",event.clientX - $("#divTable").width());
+	barTip.css("top",event.clientY - (($("#map").height() + $("#header").height())-30));
+	$("#graphContainer").append(barTip);
+}
+
+function onBarMouseOut(event) {
+	$("#barTip").remove();
+}
+
 function toggleMaps() {
 	if (_mode == MAP_MODE_SINGLE) {
 		_mode = MAP_MODE_ALL;
@@ -251,7 +264,7 @@ function postSelection() {
 }
 
 function createPointer() {
-	$(".bar").empty();
+	$("#pointerThingie").remove();
 	var bar = $(".bar")[$.inArray(_selected,_locations)];
 	var div = $("<div id='pointerThingie'></div>");
 	var inner = $("<div style='position:relative'></div>");
@@ -320,7 +333,7 @@ function createChart() {
 		space = $("<td></td>");
 		td = $("<td></td>");
 		shell = $("<div class='barShell'></div>");
-		bar = $("<div class='bar' style='height:"+pct+"%' title='"+value.attributes.name+"'></div>");		
+		bar = $("<div class='bar' style='height:"+pct+"%'></div>");		
 		$(shell).append(bar);
 		$(td).append(shell);
 		$(tr).append(space);
@@ -329,6 +342,8 @@ function createChart() {
 	$(tr).append("<td></td>");
 	$("#tableChart").append(tr);
 	$(".bar").click(onBarClick);
+	$(".bar").mouseover(onBarMouseOver);
+	$(".bar").mouseout(onBarMouseOut);	
 }
 
 function getMax() {
