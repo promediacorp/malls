@@ -80,6 +80,7 @@ var _layerOthers;
 var _layerSpecial;
 
 var _isMobile = isMobile();
+var _isNaughtyBrowser = ((navigator.appVersion.indexOf("Windows NT 5.1")!=-1) && (navigator.appVersion.indexOf("MSIE 8.0")!=-1));
 
 var _selected;
 
@@ -92,6 +93,12 @@ function init() {
 	
 	if (!_jqueryReady) return;
 	if (!_dojoReady) return;
+	
+	// check to see if the client is IE8 on Windows NT.  If so, back off on the zoom level, because the
+	// map can't handle BIG swings across the country at that level.
+	if (_isNaughtyBrowser) {
+		MALL_ZOOM_LEVEL--;
+	}
 	
 	$("#title").append(TITLE);
 	$("#subtitle").append(BYLINE);	
