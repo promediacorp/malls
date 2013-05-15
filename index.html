@@ -403,6 +403,11 @@ function situateMaps() {
 function specialCenterAndZoom(map, center, level)
 {
 	
+	/* this function is a work-around to using centerAt() at large extents.
+	   there seems to be a bug whereby the map fetches unneccesary tiles
+	   on centerAt(), so we need to make sure to turn off layers (and zoom out?)
+	   before re-centering */
+	
 	// which layers are visible?
 	
 	var visibleLayers = [];
