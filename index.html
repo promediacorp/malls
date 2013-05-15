@@ -386,7 +386,7 @@ function situateMaps() {
 	_layerOthers.remove(_selected);
 	_layerSpecial.add(_selected);
 	if (_mode == MAP_MODE_SINGLE) {
-		_map.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL);
+		specialCenterAndZoom(_map, _selected.geometry, MALL_ZOOM_LEVEL);
 		_map2.centerAndZoom(_selected.geometry,FULL_ZOOM_LEVEL);
 	} else {
 		if (!_map.extent.contains(_selected.geometry)) {
@@ -396,8 +396,45 @@ function situateMaps() {
 			// is -- this is to get the map to refresh...
 			_map.centerAt(_map.extent.getCenter());
 		}
-		_map2.centerAndZoom(_selected.geometry,MALL_ZOOM_LEVEL)		
+		specialCenterAndZoom(_map2, _selected.geometry, MALL_ZOOM_LEVEL);
 	}
+}
+
+function specialCenterAndZoom(map, center, level)
+{
+	
+	// which layers are visible?
+	
+	var visibleLayers = [];
+	
+	$.each(map.layerIds, function(index, value) {
+		if (map.getLayer(value).visible) visibleLayers.push(value);
+	});
+	
+	$.each(map.graphicsLayerIds, function(index, value) {
+		if (map.getLayer(value).visible) visibleLayers.push(value);
+	});
+	
+	// turn off visible layers
+	
+	$.each(visibleLayers, function(index, value) {
+		map.getLayer(value).hide();
+	});
+
+	map.setLevel(3);
+	setTimeout(function() {
+		map.centerAt(center);
+		setTimeout(function() {
+			map.setLevel(level);
+			map.centerAt(center);
+			setTimeout(function(){
+				// turn visible layers back on
+				$.each(visibleLayers, function(index, value) {
+					map.getLayer(value).show();
+				});
+			}, 200);
+		}, 200);
+	}, 200)
 }
 
 function onArrowClick(event) {
