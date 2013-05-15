@@ -158,8 +158,8 @@ function init2(map) {
 	dojo.connect(_layerOthers, "onClick", layer_onClick);
 	
 	setTimeout(situateMaps,500);
-	setTimeout(function(){_layerSpecial.show()},1000);
-	setTimeout(function(){_layerOthers.show()},1000);
+	setTimeout(function(){_layerSpecial.show()},2000);
+	setTimeout(function(){_layerOthers.show()},2000);
 	
 	$("#zoomIn").click(function(e) {
 		_map.setLevel(_map.getLevel()+1);
